@@ -1,0 +1,21 @@
+POST  http://localhost:3000/task/create
+Content-Type: "application/json"
+
+{
+    "name": "Hola"
+}
+###
+GET http://localhost:3000/task/
+###
+DELETE http://localhost:3000/task/8/remove
+
+###
+GET http://localhost:3000/task/5
+
+###
+PUT  http://localhost:3000/task/5/update
+Content-Type: "application/json"
+
+{
+    "name": "Pindy"
+}
