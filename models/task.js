@@ -12,6 +12,9 @@ module.exports = function (sequelize) {
             name: {
                 type: DataTypes.STRING,
             },
+            description:{
+                type: DataTypes.STRING
+            },
             createdAt: {
                 type: DataTypes.BIGINT,
             },

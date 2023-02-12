@@ -20,6 +20,9 @@ const create = {
             name: {
                 type: "string"
             },
+            description: {
+                type: "string"
+            },
         },
     },
 };

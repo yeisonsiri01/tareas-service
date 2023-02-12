@@ -14,7 +14,12 @@ async function findOneHandler(req, reply) {
 async function createHandler(req, reply) {
     const { body } = req
     const taskService = new TaskService(this);
-    const createTask = await taskService.create({ name: body.name });
+
+    const createParams = {
+        name: body.name, 
+        description: body.description
+    }
+    const createTask = await taskService.create(createParams );
     return reply.send(createTask);
 }
 async function updateHandler(req, reply) {
