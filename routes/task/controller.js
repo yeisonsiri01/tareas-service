@@ -8,8 +8,8 @@ async function findAllHandler(req, reply) {
 async function findOneHandler(req, reply) {
     const { id } = req.params
     const taskService = new TaskService(this);
-    const findAllTask = await taskService.findOne({ id });
-    return reply.send(findAllTask);
+    const findOneTask = await taskService.findOne({ id });
+    return reply.send(findOneTask);
 }
 async function createHandler(req, reply) {
     const { body } = req
@@ -27,20 +27,34 @@ async function updateHandler(req, reply) {
     const { id } = req.params
     const taskService = new TaskService(this)
     const findOneTask = await taskService.findOne({ id })
-    if (findOneTask == null) {
-        return reply.code(404).send({ message: "task not found" })
+    if (!findOneTask) {
+        return reply.code(404).send({ message: "Task not found" })
     }
-    findOneTask.name = body.name
+
+    for (const item of Object.keys(body)) {
+        if (
+            findOneTask[item] !== undefined &&
+            typeof findOneTask[item] !== "object"
+        ) {
+            findOneTask[item] = body[item];
+        }
+    }
+
     if (!(await findOneTask.save())) {
-        return reply.code(500).send({ message: "Couldn't update this task" });
+        return reply.code(500).send({ message: "Couldn't update this Task" });
     }
     return reply.send(findOneTask)
 }
 async function deleteHandler(req, reply) {
     const { id } = req.params
     const taskService = new TaskService(this);
+    const findOneTask = await taskService.findOne({ id });
     const deleteTask = await taskService.destroy({ id });
-    return reply.send({ message: "Task deleted", id: deleteTask });
+    if (!deleteTask) {
+        return reply.send({ message: "No ID found"});
+    }else{
+        return reply.send({ message: "Task deleted", id: findOneTask });
+    }
 }
 
 module.exports = {
