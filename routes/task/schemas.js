@@ -1,5 +1,5 @@
 const findAll = {
-    tag: ["task"],
+    tags: ["task"],
 };
 const findOne = {
     tags: ["task"],
